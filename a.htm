@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Example</title>
+    <style>
+        /* Main loader container style */
+        #loaderContainer {
+            display: none; /* Hidden initially */
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        /* Simple loader style */
+        .loader {
+            border: 8px solid #f3f3f3; /* Light grey */
+            border-top: 8px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 2s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Hide the table initially */
+        #dataTable {
+            display: none;
+            margin-top: 20px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #dataTable, #dataTable th, #dataTable td {
+            border: 1px solid black;
+            text-align: center;
+            padding: 8px;
+        }
+    </style>
+    <script>
+        function showLoader() {
+            var loaderContainer = document.getElementById("loaderContainer");
+            loaderContainer.style.display = "block"; // Show the main loader container
+
+            // Create the loader div
+            var loaderDiv = document.createElement('div');
+            loaderDiv.className = "loader"; // Assign the class to the div
+
+            loaderContainer.appendChild(loaderDiv); // Append the loader to the main container
+        }
+
+        function removeLoader() {
+            var loaderContainer = document.getElementById("loaderContainer");
+            loaderContainer.innerHTML = ""; // Remove all child elements (i.e., the loader div)
+            loaderContainer.style.display = "none"; // Hide the main loader container
+        }
+
+        function generateTable() {
+            var table = document.getElementById("dataTable");
+            var tbody = document.createElement("tbody");
+
+            // Create table rows and cells
+            for (var i = 0; i < 2; i++) {
+                var row = document.createElement("tr");
+
+                for (var j = 0; j < 3; j++) {
+                    var cell = document.createElement("td");
+                    cell.textContent = "Row " + (i + 1) + ", Cell " + (j + 1);
+                    row.appendChild(cell);
+                }
+
+                tbody.appendChild(row);
+            }
+
+            table.appendChild(tbody);
+        }
+
+        function showTable() {
+            removeLoader(); // Remove the loader before showing the table
+            generateTable(); // Generate the table rows and cells
+            document.getElementById("dataTable").style.display = "table"; // Show table
+        }
+
+        function handleClick() {
+            showLoader(); // Show the loader
+
+            // Generate a random time between 1000 ms (1 sec) and 10000 ms (10 sec)
+            var randomTime = Math.floor(Math.random() * 9000) + 1000; // Random number between 1000 and 10000
+
+            document.getElementById("dataTable").style.display = "none"; // Hide table initially
+
+            setTimeout(showTable, randomTime); // Display the table after the random delay
+        }
+    </script>
+</head>
+<body>
+    <button id="submitButton" onclick="handleClick()">Submit</button><br><br>
+
+    <!-- Loader container -->
+    <div id="loaderContainer"></div>
+
+    <!-- Table element -->
+    <table id="dataTable">
+        <tr>
+            <th>Column 1</th>
+            <th>Column 2</th>
+            <th>Column 3</th>
+        </tr>
+        <!-- Table rows will be generated dynamically here -->
+    </table>
+</body>
+</html>
